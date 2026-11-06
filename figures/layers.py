@@ -3,7 +3,7 @@ import numpy as np
 from scipy.signal import hilbert
 
 from coupled_sheets import MARIO, Medium, Pulse, Response
-from style import DATA, FIGURES, plt
+from style import FIGURES, plt
 
 dt, nt = 0.01, 16384
 t = np.arange(nt) * dt
@@ -68,6 +68,5 @@ ax.legend(fontsize=7.5, frameon=False)
 ax.set_title(r"narrow-band pulse ($\omega = 3$): group vs phase delay")
 fig.tight_layout()
 fig.savefig(FIGURES / "figD_layers.png")
-np.savez_compressed(DATA / "layers.npz", N=Nall, group=gd, phase=pd, n=nb, ng=ngb, d=MARIO.d)
 print("group delay per sheet (fit)", np.polyfit(Nall[8:], gd[8:], 1)[0], "theory", (ngb - 1) * MARIO.d)
 print("phase delay per sheet (fit)", np.polyfit(Nall[8:], pd[8:], 1)[0], "theory", (nb - 1) * MARIO.d)

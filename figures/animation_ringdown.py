@@ -3,7 +3,7 @@ import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation
 
 from coupled_sheets import Medium, Pulse, fields, response
-from style import DATA, FIGURES, plt
+from style import FIGURES, plt
 
 T_END, DT_FRAME, ZOOM = 300.0, 0.25, 20
 med = Medium(n_sheets=60)
@@ -23,7 +23,6 @@ U_mech = (0.5 * (K**2 + med.w0**2 * P**2) / med.eps).sum(0)[keep] / U0
 t_mech = R.t[keep]
 U_mech_f = np.interp(tf, t_mech, U_mech)
 U_slab = U_field + U_mech_f
-np.savez_compressed(DATA / "ringdown.npz", x=x, t=tf, U_field=U_field, U_mech=U_mech_f)
 
 fig, axs = plt.subplots(3, 1, figsize=(9, 7), dpi=120, gridspec_kw=dict(height_ratios=[1, 1, 1.1]))
 for ax in axs[:2]:

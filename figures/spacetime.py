@@ -1,4 +1,7 @@
-"""Figure A: space-time diagrams E = E_inc + E_mat (the notebook's slab and a thicker one); saves their data."""
+"""Figure A: space-time diagrams E = E_inc + E_mat (the notebook's slab and a thicker one).
+
+Saves their data to out/data/, which front.py and animation_pulse.py read.
+"""
 import numpy as np
 
 from coupled_sheets import MARIO, Medium, Pulse, centre_path, fields, response
@@ -10,7 +13,7 @@ for tag, med, xlim, tmax in [("mario", MARIO, (-5, 40), 30.0), ("thick", Medium(
     x = np.linspace(*xlim, 1001)
     t = np.arange(0, tmax + 1e-9, 0.05)
     F = fields(R, x, t)
-    np.savez_compressed(DATA / f"spacetime_{tag}.npz", x=x, t=t, xs=med.xs, edges=med.edges, **F)
+    np.savez_compressed(DATA / f"spacetime_{tag}.npz", x=x, t=t, **F)
     print(tag, f"n={med.n(p.k).real:.4f} ng={med.ng(p.k):.4f} L={med.length:.3f} delay={(med.ng(p.k)-1)*med.length:.2f}")
     xc, tc = centre_path(med, p, p.k, tmax)
     fig, axs = plt.subplots(1, 3, figsize=(11, 4.4), sharey=True)

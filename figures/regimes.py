@@ -2,7 +2,7 @@
 import numpy as np
 
 from coupled_sheets import MARIO, Pulse, Response, fields, lorentz_index, response
-from style import DATA, FIGURES, plt, spacetime
+from style import FIGURES, plt, spacetime
 
 med = MARIO
 ws = [2.0, 4.0, 5.6, 8.0]
@@ -10,12 +10,10 @@ x = np.linspace(-15, 45, 801)
 t = np.arange(0, 40.0001, 0.08)
 fig = plt.figure(figsize=(11, 6.6))
 gs = fig.add_gridspec(2, 4, height_ratios=[1, 0.9])
-E4 = []
 for i, w in enumerate(ws):
     p = Pulse(center=2.5, a=3.0, k=w)
     R = response(med, p)
     F = fields(R, x, t)
-    E4.append(F["E"].astype(np.float32))
     ax = fig.add_subplot(gs[0, i])
     spacetime(ax, F["E"], x, t, med, title=rf"$\omega = {w:g}$ ($\omega/\omega_0 = {w / med.w0:.2f}$)")
     ax.plot([2.5, 42.5], [0, 40], color="0.25", lw=0.6, ls=":")
@@ -71,8 +69,5 @@ ax.set_xlabel(r"$\omega$  (here $\omega_0 = 5$, $\omega_p = 3.59$)")
 ax.legend(fontsize=7.5, frameon=False, ncol=2, loc="upper right")
 fig.tight_layout()
 fig.savefig(FIGURES / "figF_regimes.png")
-np.savez_compressed(DATA / "regimes.npz", x=x, t=t, ws=ws, E=np.stack(E4), wg=wg, n=nB.real, ng=ng,
-                    n_lorentz=med.n(wg, model=lorentz_index).real, wm=meas[:, 0], n_meas=n_meas, ng_meas=ng_meas,
-                    w0=med.w0, wp=med.wp, edges=med.edges)
 for w, a, b in zip(meas[:, 0], n_meas, ng_meas):
     print(f"w={w:.2f} n_meas={a:.4f} n_th={med.n(w).real:.4f} ng_meas={b:.4f} ng_th={med.ng(w):.4f}")

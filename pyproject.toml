@@ -1,6 +1,6 @@
 [project]
 name = "electro-1d"
-version = "0.1.0"
+version = "0.1.1"
 description = "Light in matter in one dimension: a grid Maxwell solver and the exact response of coupled charged sheets"
 readme = "README.md"
 license = "MIT"
@@ -19,7 +19,6 @@ cuda = ["jax[cuda12]>=0.12.0.1"]
 
 [dependency-groups]
 dev = ["pre-commit>=4", "pytest>=8"]
-video = ["manim>=0.22.1", "piper-tts>=1.8.0", "typst>=0.15.0"]
 
 [build-system]
 requires = ["uv_build>=0.11.6,<0.12"]

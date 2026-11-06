@@ -1,13 +1,12 @@
-"""2D (x, y) + time: an s-polarized pulsed beam hits the thick slab at 45 degrees. Data, figures, animation.
+"""2D (x, y) + time: an s-polarized pulsed beam hits the thick slab at 45 degrees. Figures and animation.
 
-Measures the beam axes (incident, reflected, transmitted) and the angle inside the slab against Snell's law;
-saves the geometry to out/data/beam_2d_geometry.npz for the video.
+Measures the beam axes (incident, reflected, transmitted) and the angle inside the slab against Snell's law.
 """
 import numpy as np
 from matplotlib.animation import FFMpegWriter, FuncAnimation
 
 from coupled_sheets import Beam, Medium
-from style import DATA, FIGURES, plt
+from style import FIGURES, plt
 
 med = Medium(n_sheets=60, x0=0.0)
 beam = Beam()
@@ -62,8 +61,6 @@ print(f"Snell from the measured incidence {deg(th_i):.2f} deg: {deg(np.arcsin(np
 # geometric optics drawn with the measured incidence: straight line at c, Snell path, mirror
 th_snell = np.arcsin(np.sin(th_i) / n)
 y_exit = y_in + (xb - xa) * np.tan(th_snell)
-np.savez(DATA / "beam_2d_geometry.npz", xa=xa, xb=xb, y_in=y_in, y_exit=y_exit, th_i=th_i, th_t=th_snell,
-         th_measured=th_meas)
 ext = [x[0], x[-1], y[0], y[-1]]
 
 
